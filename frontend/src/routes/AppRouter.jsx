@@ -1,8 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LoginPage from "../pages/LoginPage";
 import DashboardPage from "../pages/DashboardPage";
@@ -19,12 +15,7 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <LoginPage />
-          }
-        />
+        <Route path="/" element={<LoginPage />} />
 
         <Route
           path="/dashboard"
@@ -62,15 +53,19 @@ const AppRouter = () => {
           }
         />
 
+        <Route path="*" element={<NotFoundPage />} />
+
         <Route
-          path="*"
+          path="/projects/create"
           element={
-            <NotFoundPage />
+            <ProtectedRoute>
+              <CreateProjectPage />
+            </ProtectedRoute>
           }
         />
 
         <Route
-          path="/projects/create"
+          path="/projects/edit/:id"
           element={
             <ProtectedRoute>
               <CreateProjectPage />

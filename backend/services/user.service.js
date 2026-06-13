@@ -1,11 +1,7 @@
 import User from "../models/User.js";
 import ApiError from "../utils/ApiError.js";
 
-export const getUsers = async ({
-  page = 1,
-  limit = 10,
-  search = "",
-}) => {
+export const getUsers = async ({ page = 1, limit = 10, search = "" }) => {
   const query = {};
 
   if (search) {
@@ -46,34 +42,20 @@ export const getUserById = async (id) => {
   return user;
 };
 
-export const updateProfile = async (
-  userId,
-  payload
-) => {
-  const user = await User.findByIdAndUpdate(
-    userId,
-    payload,
-    {
-      new: true,
-      runValidators: true,
-    }
-  ).select("-password");
+export const updateProfile = async (userId, payload) => {
+  const user = await User.findByIdAndUpdate(userId, payload, {
+    new: true,
+    runValidators: true,
+  }).select("-password");
 
   return user;
 };
 
-export const updateUserByAdmin = async (
-  userId,
-  payload
-) => {
-  const user = await User.findByIdAndUpdate(
-    userId,
-    payload,
-    {
-      new: true,
-      runValidators: true,
-    }
-  ).select("-password");
+export const updateUserByAdmin = async (userId, payload) => {
+  const user = await User.findByIdAndUpdate(userId, payload, {
+    new: true,
+    runValidators: true,
+  }).select("-password");
 
   if (!user) {
     throw new ApiError(404, "User not found");
@@ -82,10 +64,7 @@ export const updateUserByAdmin = async (
   return user;
 };
 
-export const updateUserRole = async (
-  userId,
-  role
-) => {
+export const updateUserRole = async (userId, role) => {
   const user = await User.findById(userId);
 
   if (!user) {

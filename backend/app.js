@@ -22,7 +22,7 @@ app.use(
   cors({
     origin: "*",
     credentials: true,
-  })
+  }),
 );
 
 // Common Middleware
@@ -34,15 +34,7 @@ app.use(cookieParser());
 
 // Static Upload Folder
 // app.use("/uploads", express.static("uploads"));
-app.use(
-  "/uploads",
-  express.static(
-    path.join(
-      process.cwd(),
-      "uploads"
-    )
-  )
-);
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.get("/", (req, res) => {
   res.json({

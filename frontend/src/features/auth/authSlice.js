@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import {
-  loginUser,
-  loadProfile,
-} from "./authThunks";
+import { loginUser, loadProfile } from "./authThunks";
 
 import { storage } from "../../utils/storage";
 
@@ -14,80 +11,49 @@ const initialState = {
   error: null,
 };
 
-const authSlice =
-  createSlice({
-    name: "auth",
+const authSlice = createSlice({
+  name: "auth",
 
-    initialState,
+  initialState,
 
-    reducers: {
-      logout: (state) => {
-        state.user = null;
-        state.token = null;
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+      state.error = null;
+
+      storage.clear();
+    },
+  },
+
+  extraReducers: (builder) => {
+    builder
+
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
         state.error = null;
+      })
 
-        storage.clear();
-      },
-    },
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loading = false;
 
-    extraReducers: (
-      builder
-    ) => {
-      builder
+        state.user = action.payload.user;
 
-        .addCase(
-          loginUser.pending,
-          (state) => {
-            state.loading = true;
-            state.error = null;
-          }
-        )
+        state.token = action.payload.token;
+      })
 
-        .addCase(
-          loginUser.fulfilled,
-          (
-            state,
-            action
-          ) => {
-            state.loading =
-              false;
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
 
-            state.user =
-              action.payload.user;
+        state.error = action.payload;
+      })
 
-            state.token =
-              action.payload.token;
-          }
-        )
+      .addCase(loadProfile.fulfilled, (state, action) => {
+        state.user = action.payload;
+      });
+  },
+});
 
-        .addCase(
-          loginUser.rejected,
-          (
-            state,
-            action
-          ) => {
-            state.loading =
-              false;
-
-            state.error =
-              action.payload;
-          }
-        )
-
-        .addCase(
-          loadProfile.fulfilled,
-          (
-            state,
-            action
-          ) => {
-            state.user =
-              action.payload;
-          }
-        );
-    },
-  });
-
-export const { logout } =
-  authSlice.actions;
+export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,11 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import {
-  fetchUsers,
-  createUser,
-  updateUser,
-  removeUser,
-} from "./userThunks";
+import { fetchUsers, createUser, updateUser, removeUser } from "./userThunks";
 
 const initialState = {
   loading: false,
@@ -53,25 +48,21 @@ const userSlice = createSlice({
         //   }
         // }
 
-        state.users =
-          action.payload?.data?.users || [];
+        state.users = action.payload?.data?.users || [];
 
-        state.pagination =
-          action.payload?.data?.pagination || {
-            page: 1,
-            limit: 10,
-            total: 0,
-            totalPages: 1,
-          };
+        state.pagination = action.payload?.data?.pagination || {
+          page: 1,
+          limit: 10,
+          total: 0,
+          totalPages: 1,
+        };
 
         state.error = null;
       })
 
       .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false;
-        state.error =
-          action.payload ||
-          "Failed to fetch users";
+        state.error = action.payload || "Failed to fetch users";
       })
 
       // =====================
@@ -91,9 +82,7 @@ const userSlice = createSlice({
         // }
 
         if (action.payload?.data) {
-          state.users.unshift(
-            action.payload.data
-          );
+          state.users.unshift(action.payload.data);
 
           state.pagination.total += 1;
         }
@@ -103,9 +92,7 @@ const userSlice = createSlice({
 
       .addCase(createUser.rejected, (state, action) => {
         state.loading = false;
-        state.error =
-          action.payload ||
-          "Failed to create user";
+        state.error = action.payload || "Failed to create user";
       })
 
       // =====================
@@ -118,20 +105,15 @@ const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         state.loading = false;
 
-        const updatedUser =
-          action.payload?.data;
+        const updatedUser = action.payload?.data;
 
         if (updatedUser) {
-          const index =
-            state.users.findIndex(
-              (user) =>
-                user._id ===
-                updatedUser._id
-            );
+          const index = state.users.findIndex(
+            (user) => user._id === updatedUser._id,
+          );
 
           if (index !== -1) {
-            state.users[index] =
-              updatedUser;
+            state.users[index] = updatedUser;
           }
         }
 
@@ -140,9 +122,7 @@ const userSlice = createSlice({
 
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
-        state.error =
-          action.payload ||
-          "Failed to update user";
+        state.error = action.payload || "Failed to update user";
       })
 
       // =====================
@@ -155,33 +135,20 @@ const userSlice = createSlice({
       .addCase(removeUser.fulfilled, (state, action) => {
         state.loading = false;
 
-        state.users =
-          state.users.filter(
-            (user) =>
-              user._id !==
-              action.payload
-          );
+        state.users = state.users.filter((user) => user._id !== action.payload);
 
-        state.pagination.total =
-          Math.max(
-            0,
-            state.pagination.total - 1
-          );
+        state.pagination.total = Math.max(0, state.pagination.total - 1);
 
         state.error = null;
       })
 
       .addCase(removeUser.rejected, (state, action) => {
         state.loading = false;
-        state.error =
-          action.payload ||
-          "Failed to delete user";
+        state.error = action.payload || "Failed to delete user";
       });
   },
 });
 
-export const {
-  clearUserError,
-} = userSlice.actions;
+export const { clearUserError } = userSlice.actions;
 
 export default userSlice.reducer;

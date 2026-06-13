@@ -1,11 +1,6 @@
 import { motion } from "framer-motion";
 
-const StatsCard = ({
-  title,
-  value,
-  icon,
-  color,
-}) => {
+const StatsCard = ({ title, value, icon, color }) => {
   const Icon = icon;
 
   return (
@@ -17,22 +12,13 @@ const StatsCard = ({
     >
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm text-slate-400">
-            {title}
-          </p>
+          <p className="text-sm text-slate-400">{title}</p>
 
-          <h2 className="mt-4 text-4xl font-bold text-slate-800">
-            {value}
-          </h2>
+          <h2 className="mt-4 text-4xl font-bold text-slate-800">{value}</h2>
         </div>
 
-        <div
-          className={`rounded-2xl p-4 ${color}`}
-        >
-          <Icon
-            className="text-white"
-            size={28}
-          />
+        <div className={`rounded-2xl p-4 ${color}`}>
+          <Icon className="text-white" size={28} />
         </div>
       </div>
     </motion.div>

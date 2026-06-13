@@ -22,51 +22,34 @@ const ProjectListPage = () => {
 
   const { isAdmin } = useAuth();
 
-  const { projects, loading } = useSelector(
-    (state) => state.projects
-  );
+  const { projects, loading } = useSelector((state) => state.projects);
 
   const [search, setSearch] = useState("");
 
   // Confirmation Modal State
-  const [
-    deleteProjectId,
-    setDeleteProjectId,
-  ] = useState(null);
+  const [deleteProjectId, setDeleteProjectId] = useState(null);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       dispatch(
         fetchProjects({
           search,
-        })
+        }),
       );
     }, 400);
 
-    return () =>
-      clearTimeout(timeout);
+    return () => clearTimeout(timeout);
   }, [dispatch, search]);
 
   const confirmDelete = async () => {
     if (!deleteProjectId) return;
 
-    const result = await dispatch(
-      removeProject(deleteProjectId)
-    );
+    const result = await dispatch(removeProject(deleteProjectId));
 
-    if (
-      removeProject.fulfilled.match(
-        result
-      )
-    ) {
-      toast.success(
-        "Project deleted successfully"
-      );
+    if (removeProject.fulfilled.match(result)) {
+      toast.success("Project deleted successfully");
     } else {
-      toast.error(
-        result.payload ||
-          "Unable to delete project"
-      );
+      toast.error(result.payload || "Unable to delete project");
     }
 
     setDeleteProjectId(null);
@@ -77,9 +60,7 @@ const ProjectListPage = () => {
       {/* Header */}
       <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-slate-800">
-            Projects
-          </h1>
+          <h1 className="text-3xl font-bold text-slate-800">Projects</h1>
 
           <p className="mt-2 text-slate-500">
             Manage and track all your projects.
@@ -99,19 +80,12 @@ const ProjectListPage = () => {
 
       {/* Search */}
       <div className="mb-8 flex items-center gap-3 rounded-2xl bg-white p-4 shadow-sm">
-        <Search
-          size={18}
-          className="text-slate-400"
-        />
+        <Search size={18} className="text-slate-400" />
 
         <input
           type="text"
           value={search}
-          onChange={(e) =>
-            setSearch(
-              e.target.value
-            )
-          }
+          onChange={(e) => setSearch(e.target.value)}
           placeholder="Search projects..."
           className="w-full bg-transparent outline-none"
         />
@@ -120,55 +94,32 @@ const ProjectListPage = () => {
       {/* Content */}
       {loading ? (
         <Loader />
-      ) : projects?.length ===
-        0 ? (
+      ) : projects?.length === 0 ? (
         <EmptyState
           title="No Projects Found"
           description="Create your first project to start managing your team's work."
         />
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {projects.map(
-            (project) => (
-              <ProjectCard
-                key={
-                  project._id
-                }
-                project={
-                  project
-                }
-                isAdmin={
-                  isAdmin
-                }
-                onDelete={(
-                  id
-                ) =>
-                  setDeleteProjectId(
-                    id
-                  )
-                }
-              />
-            )
-          )}
+          {projects.map((project) => (
+            <ProjectCard
+              key={project._id}
+              project={project}
+              isAdmin={isAdmin}
+              onDelete={(id) => setDeleteProjectId(id)}
+            />
+          ))}
         </div>
       )}
 
       {/* Delete Confirmation */}
       <ConfirmDialog
-        isOpen={
-          !!deleteProjectId
-        }
+        isOpen={!!deleteProjectId}
         title="Delete Project"
         description="This action cannot be undone. Do you really want to delete this project?"
         confirmText="Delete"
-        onConfirm={
-          confirmDelete
-        }
-        onCancel={() =>
-          setDeleteProjectId(
-            null
-          )
-        }
+        onConfirm={confirmDelete}
+        onCancel={() => setDeleteProjectId(null)}
       />
     </AppLayout>
   );

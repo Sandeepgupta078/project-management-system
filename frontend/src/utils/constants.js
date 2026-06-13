@@ -1,9 +1,4 @@
-import {
-  LayoutDashboard,
-  FolderKanban,
-  Users,
-  User,
-} from "lucide-react";
+import { LayoutDashboard, FolderKanban, Users, User } from "lucide-react";
 
 export const USER_ROLES = {
   ADMIN: "Admin",

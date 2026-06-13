@@ -7,52 +7,30 @@ const initialState = {
   error: null,
 };
 
-const dashboardSlice =
-  createSlice({
-    name: "dashboard",
+const dashboardSlice = createSlice({
+  name: "dashboard",
 
-    initialState,
+  initialState,
 
-    reducers: {},
+  reducers: {},
 
-    extraReducers: (
-      builder
-    ) => {
-      builder
-        .addCase(
-          fetchDashboard.pending,
-          (state) => {
-            state.loading = true;
-          }
-        )
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchDashboard.pending, (state) => {
+        state.loading = true;
+      })
 
-        .addCase(
-          fetchDashboard.fulfilled,
-          (
-            state,
-            action
-          ) => {
-            state.loading =
-              false;
-            state.analytics =
-              action.payload;
-            state.error = null;
-          }
-        )
+      .addCase(fetchDashboard.fulfilled, (state, action) => {
+        state.loading = false;
+        state.analytics = action.payload;
+        state.error = null;
+      })
 
-        .addCase(
-          fetchDashboard.rejected,
-          (
-            state,
-            action
-          ) => {
-            state.loading =
-              false;
-            state.error =
-              action.payload;
-          }
-        );
-    },
-  });
+      .addCase(fetchDashboard.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
+});
 
 export default dashboardSlice.reducer;

@@ -2,18 +2,15 @@ import axios from "axios";
 import { storage } from "../utils/storage";
 
 const api = axios.create({
-  baseURL:
-    import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
-    "Content-Type":
-      "application/json",
+    "Content-Type": "application/json",
   },
 });
 
 api.interceptors.request.use(
   (config) => {
-    const token =
-      storage.getToken();
+    const token = storage.getToken();
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -21,28 +18,22 @@ api.interceptors.request.use(
 
     return config;
   },
-  (error) =>
-    Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (
-      error.response?.status === 401
-    ) {
+    if (error.response?.status === 401) {
       storage.clear();
 
-      if (
-        window.location.pathname !==
-        "/"
-      ) {
+      if (window.location.pathname !== "/") {
         window.location.href = "/";
       }
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

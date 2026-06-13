@@ -1,8 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import {
-  useDispatch,
-  useSelector,
-} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import toast from "react-hot-toast";
 
@@ -12,50 +9,23 @@ import ProjectForm from "../components/projects/ProjectForm";
 import { createProject } from "../features/projects/projectThunks";
 
 const CreateProjectPage = () => {
-  const dispatch =
-    useDispatch();
+  const dispatch = useDispatch();
 
-  const navigate =
-    useNavigate();
+  const navigate = useNavigate();
 
-  const { loading } =
-    useSelector(
-      (
-        state
-      ) =>
-        state.projects
-    );
+  const { loading } = useSelector((state) => state.projects);
 
-  const handleSubmit =
-    async (
-      formData
-    ) => {
-      const result =
-        await dispatch(
-          createProject(
-            formData
-          )
-        );
+  const handleSubmit = async (formData) => {
+    const result = await dispatch(createProject(formData));
 
-      if (
-        createProject.fulfilled.match(
-          result
-        )
-      ) {
-        toast.success(
-          "Project created successfully"
-        );
+    if (createProject.fulfilled.match(result)) {
+      toast.success("Project created successfully");
 
-        navigate(
-          "/projects"
-        );
-      } else {
-        toast.error(
-          result.payload ||
-            "Unable to create project"
-        );
-      }
-    };
+      navigate("/projects");
+    } else {
+      toast.error(result.payload || "Unable to create project");
+    }
+  };
 
   return (
     <AppLayout>
@@ -69,14 +39,7 @@ const CreateProjectPage = () => {
         </p>
       </div>
 
-      <ProjectForm
-        loading={
-          loading
-        }
-        onSubmit={
-          handleSubmit
-        }
-      />
+      <ProjectForm loading={loading} onSubmit={handleSubmit} />
     </AppLayout>
   );
 };

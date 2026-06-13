@@ -15,46 +15,27 @@ export const getUserApi = async (id) => {
 };
 
 export const createUserApi = async (payload) => {
-  const response = await api.post(
-    "/auth/register",
-    payload
-  );
+  const response = await api.post("/auth/register", payload);
 
   return response.data;
 };
 
-export const updateUserApi = async (
-  id,
-  payload
-) => {
-  const response = await api.put(
-    `/users/${id}`,
-    payload
-  );
+export const updateUserApi = async (id, payload) => {
+  const response = await api.put(`/users/${id}`, payload);
 
   return response.data;
 };
 
-export const changeRoleApi = async (
-  id,
-  role
-) => {
-  const response = await api.patch(
-    `/users/${id}/role`,
-    {
-      role,
-    }
-  );
+export const changeRoleApi = async (id, role) => {
+  const response = await api.patch(`/users/${id}/role`, {
+    role,
+  });
 
   return response.data;
 };
 
-export const deleteUserApi = async (
-  id
-) => {
-  const response = await api.delete(
-    `/users/${id}`
-  );
+export const deleteUserApi = async (id) => {
+  const response = await api.delete(`/users/${id}`);
 
   return response.data;
 };

@@ -1,11 +1,7 @@
 import { body } from "express-validator";
 
 export const updateProfileValidation = [
-  body("name")
-    .optional()
-    .trim()
-    .notEmpty()
-    .withMessage("Name cannot be empty"),
+  body("name").optional().trim().notEmpty().withMessage("Name cannot be empty"),
 
   body("email")
     .optional()

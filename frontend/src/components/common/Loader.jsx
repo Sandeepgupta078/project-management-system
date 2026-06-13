@@ -4,10 +4,7 @@ const Loader = () => {
       {Array.from({
         length: 6,
       }).map((_, index) => (
-        <div
-          key={index}
-          className="rounded-3xl bg-white p-6 shadow-sm"
-        >
+        <div key={index} className="rounded-3xl bg-white p-6 shadow-sm">
           <div className="h-6 w-2/3 animate-pulse rounded-lg bg-slate-200"></div>
 
           <div className="mt-5 h-4 w-full animate-pulse rounded-lg bg-slate-100"></div>
