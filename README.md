@@ -132,7 +132,7 @@ project-management-system/
 ## 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/your-username/project-management-system.git
+git clone https://github.com/Sandeepgupta078/project-management-system.git
 
 cd project-management-system
 ```
