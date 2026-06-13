@@ -357,10 +357,12 @@ Protected API Access
 
 # 👨‍💻 Author
 
-**Candidate Name:** Sandeep Gupta
+**Name:** Sandeep Gupta
 
 **Role:** Full Stack Developer
 
 **Tech Stack:** MERN Stack (MongoDB, Express.js, React.js, Node.js)
-**LinkedIn:** [linkedin.com/in/your-profile](https://linkedin.com/in/your-profile)
-**GitHub:** [github.com/your-username](https://github.com/your-username)
+
+**LinkedIn:** [linkedin.com/in/your-profile](https://linkedin.com/in/sandeepg75)
+
+**GitHub:** [github.com/your-username](https://github.com/Sandeepgupta078)

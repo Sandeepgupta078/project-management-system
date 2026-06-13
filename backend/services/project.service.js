@@ -7,62 +7,103 @@ export const createProjectService = async (
   return await Project.create(payload);
 };
 
-export const getProjectsService = async (
-  user,
-  query
-) => {
-  const page = Number(query.page) || 1;
-  const limit =
-    Number(query.limit) || 10;
-  const search = query.search || "";
+export const getProjectsService =
+  async (
+    user,
+    query
+  ) => {
+    const page =
+      Number(
+        query.page
+      ) || 1;
 
-  let filter = {};
+    const limit =
+      Number(
+        query.limit
+      ) || 10;
 
-  if (search) {
-    filter.$text = {
-      $search: search,
+    const search =
+      query.search?.trim() ||
+      "";
+
+    const skip =
+      (page - 1) *
+      limit;
+
+    // Base filter
+    const filter = {};
+
+    // Non-admin users can only see
+    // assigned projects
+    if (
+      user.role !==
+      "Admin"
+    ) {
+      filter.assignedUsers =
+        user._id;
+    }
+
+    // Search filter
+    if (search) {
+      filter.$or = [
+        {
+          title: {
+            $regex:
+              search,
+            $options:
+              "i",
+          },
+        },
+        {
+          description:
+            {
+              $regex:
+                search,
+              $options:
+                "i",
+            },
+        },
+      ];
+    }
+
+    const total =
+      await Project.countDocuments(
+        filter
+      );
+
+    const projects =
+      await Project.find(
+        filter
+      )
+        .populate(
+          "assignedUsers",
+          "name email"
+        )
+        .populate(
+          "createdBy",
+          "name email"
+        )
+        .sort({
+          createdAt:
+            -1,
+        })
+        .skip(skip)
+        .limit(limit);
+
+    return {
+      projects,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages:
+          Math.ceil(
+            total /
+              limit
+          ) || 1,
+      },
     };
-  }
-
-  if (user.role === "User") {
-    filter.assignedUsers = user._id;
-  }
-
-  const skip = (page - 1) * limit;
-
-  const projects =
-    await Project.find(filter)
-      .populate(
-        "assignedUsers",
-        "name email role"
-      )
-      .populate(
-        "createdBy",
-        "name email"
-      )
-      .sort({
-        createdAt: -1,
-      })
-      .skip(skip)
-      .limit(limit);
-
-  const total =
-    await Project.countDocuments(
-      filter
-    );
-
-  return {
-    projects,
-    pagination: {
-      page,
-      limit,
-      total,
-      totalPages: Math.ceil(
-        total / limit
-      ),
-    },
   };
-};
 
 export const getProjectByIdService =
   async (id) => {
