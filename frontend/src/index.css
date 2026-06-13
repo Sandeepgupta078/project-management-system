@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+  background: #f8fafc;
+  color: #0f172a;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+button {
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
