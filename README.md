@@ -363,6 +363,6 @@ Protected API Access
 
 **Tech Stack:** MERN Stack (MongoDB, Express.js, React.js, Node.js)
 
-**LinkedIn:** [linkedin.com/in/your-profile](https://linkedin.com/in/sandeepg75)
+**LinkedIn:** [linkedin.com/in/sandeepg75](https://linkedin.com/in/sandeepg75)
 
-**GitHub:** [github.com/your-username](https://github.com/Sandeepgupta078)
+**GitHub:** [github.com/Sandeepgupta078](https://github.com/Sandeepgupta078)
